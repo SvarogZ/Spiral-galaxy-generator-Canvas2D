@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Galaxy generator</title>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<td>
+					Seed:
+				</td>
+				<td>
+					<input id="seed_text" type="text" value="10" disabled>
+				</td>
+				<td>
+					<input id="seed_slider" type="range" min="0" max="100" value="10">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Radius:
+				</td>
+				<td>
+					<input id="radius_text" type="text" value="100" disabled>
+				</td>
+				<td>
+					<input id="radius_slider" type="range" min="10" max="250" value="100">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Spirals:
+				</td>
+				<td>
+					<input id="spirals_text" type="text" value="2" disabled>
+				</td>
+				<td>
+					<input id="spirals_slider" type="range" min="1" max="10" value="2">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Density:
+				</td>
+				<td>
+					<input id="density_text" type="text" value="10" disabled>
+				</td>
+				<td>
+					<input id="density_slider" type="range" min="1" max="100" value="10">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Right shift:
+				</td>
+				<td>
+					<input id="right_shift_text" type="text" value="250" disabled>
+				</td>
+				<td>
+					<input id="right_shift_slider" type="range" min="0" max="500" value="250">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Down shift:
+				</td>
+				<td>
+					<input id="down_shift_text" type="text" value="250" disabled>
+				</td>
+				<td>
+					<input id="down_shift_slider" type="range" min="0" max="500" value="250">
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<input type="button" value="Create Galaxy" onclick="create()">
+				</td>
+				<td id="result" colspan="2">
+				</td>
+			</tr>
+		</table>
+
+		<canvas id="screen" width="500" height="500"></canvas>
+			
+		<noscript>
+			You need to enable JavaScript to run this app.
+		</noscript>
+		
+		<script src="app.js"></script>
+	</body>
+</html>
