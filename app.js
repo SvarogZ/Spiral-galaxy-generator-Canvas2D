@@ -18,6 +18,7 @@ const ctx = canvas.getContext("2d");
 
 const result = document.getElementById("result");
 
+
 seedSlider.oninput = function() {
   seedText.value = this.value;
 }
@@ -64,7 +65,18 @@ function getNumberFromSeed(value) {
 
 	let x;
 	for (x of value) {
-		combitedString += x;
+		combitedString += Math.floor(x);
+	}
+	
+	let stringLenght = combitedString.length;
+	while(stringLenght > 15) {
+		const stringFirst = combitedString.slice(0,15);
+		const stringEnd = combitedString.slice(15);
+		
+		let n = Math.sin(parseInt(stringFirst)) * 10000;
+		n = Math.floor((n - Math.floor(n)) * 1000000);
+		combitedString = n + stringEnd;
+		stringLenght = combitedString.length;
 	}
 	
 	const normalized = Math.sin(parseInt(combitedString)) * 10000;
@@ -94,7 +106,7 @@ function getDistanceToSpiral(distanceToCenterNormalized,angle,spiralA,spiralB) {
 	return delta;
 }
 
-function spiralCheck(seed,x,y,numberOfSpirals,radius,distanceToSpiralNormalized) {
+function spiralCheck(seed,x,y,radius,distanceToSpiralNormalized) {
 	//const normalizedNumber = random(0,1,false);
 	const combinedSeed = [x+radius,y+radius,seed,distanceToSpiralNormalized];// all numbers must be positive
 	const normalizedNumber = getNumberFromSeed(combinedSeed);
@@ -103,7 +115,7 @@ function spiralCheck(seed,x,y,numberOfSpirals,radius,distanceToSpiralNormalized)
 	return checkNumber > normalizedNumber ? true : false;
 }
 
-function galaxyCheck(seed,x,y,numberOfSpirals,radius,density,distanceToCenterNormalized){
+function galaxyCheck(seed,x,y,radius,density,distanceToCenterNormalized){
 	//const normalizedNumber = random(0,1,false);
 	const combinedSeed = [x+radius,y+radius,seed];// all numbers must be positive
 	const normalizedNumber = getNumberFromSeed(combinedSeed);
@@ -117,7 +129,9 @@ function generateStar(seed,x,y,numberOfSpirals,radius,density,rightShift,downShi
 	if (distanceToCenter < spiralA / 2) {return null;}//black hole in the middle
 	const distanceToCenterNormalized = distanceToCenter / radius * 100;
 	
-	if(!galaxyCheck(seed,x,y,numberOfSpirals,radius,density,distanceToCenterNormalized)){return null;}
+	if(!galaxyCheck(seed,x,y,radius,density,distanceToCenterNormalized)){return null;}
+	
+	if(numberOfSpirals==0){ return { x: x+rightShift, y: y+downShift }; }
 	
 	const angleNotAdapted = Math.atan2(x,y);
 	const angleAdapted = angleNotAdapted < 0 ? angleNotAdapted + 2*Math.PI : angleNotAdapted;
@@ -133,7 +147,7 @@ function generateStar(seed,x,y,numberOfSpirals,radius,density,rightShift,downShi
 	}
 	
 	const distanceToSpiralNormalized = minDistanceToSpiral/spiralBelt*100;
-	if(!spiralCheck(seed,x,y,numberOfSpirals,radius,distanceToSpiralNormalized)){return null;}
+	if(!spiralCheck(seed,x,y,radius,distanceToSpiralNormalized)){return null;}
 	
 	return { x: x+rightShift, y: y+downShift };
 }
